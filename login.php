@@ -12,6 +12,7 @@
             if($username==$rws['cio'] && $password==$rws['password']) {
             $response["success"] = TRUE;
             $response["id"] = $rws["Id"];
+            $response["mail"] = $rws["cio"];    
             $response["message"] = "Logging in";
             echo json_encode($response);
             }

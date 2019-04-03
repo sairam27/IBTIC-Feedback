@@ -1,4 +1,5 @@
 (function ($) {
+    "use strict";
     var id = localStorage.getItem("id");
     if(id==null ){
     location.assign("index.html");
@@ -26,30 +27,42 @@
             sai(presentationid);
             
         }
+    $.get("topics_client.php",{id:localStorage.getItem("id"),mail:localStorage.getItem("mail")},function(data){
+            var json = jQuery.parseJSON(data);
+            var len = Object.keys(json).length;
+        for(var v=0; v<(len-2);v++){
+            var row='';
+            var pd = json[v].Pid;
+            var topic = json[v].Topic;
+            localStorage.setItem(pd,topic);
+            }
+        sairam(1);
+    });
     var rate1 = parseInt($("#rate").val());
     function sairam(id){
         switch(id){
-            case 1:$(".one h5").html("AI Based Email Segregation/Routing System");
+            case 1:$(".one h5").html(localStorage.getItem("p"+1));
                 $(".one h5").css('font-size','14px');
                 break;
-            case 2: $(".one h5").html("LLMS e-Proposal App");$(".one h5").css('font-size','14px');
+            case 2: $(".one h5").html(localStorage.getItem("p"+2));$(".one h5").css('font-size','14px');
                 break;
-                case 3: $(".one h5").html("Yono");$(".one h5").css('font-size','14px'); 
+                case 3: $(".one h5").html(localStorage.getItem("p"+3));
+                        $(".one h5").css('font-size','14px'); 
                 break;
-                case 4: $(".one h5").html("Personal Electronic card(PEC)");
+                case 4: $(".one h5").html(localStorage.getItem("p"+4));
                         $(".one h5").css('font-size','14px');
                 break;
-                case 5: $(".one h5").html("Global attestation platform for authentic identities and credentials");$(".one h5").css('font-size','14px'); 
+                case 5: $(".one h5").html(localStorage.getItem("p"+5));$(".one h5").css('font-size','14px'); 
                 break;
-                case 6: $(".one h5").html("Canara DiYA");$(".one h5").css('font-size','14px'); 
+                case 6: $(".one h5").html(localStorage.getItem("p"+6));$(".one h5").css('font-size','14px'); 
                 break;
-                case 7: $(".one h5").html("CANDI BRANCH");$(".one h5").css('font-size','14px'); 
+                case 7: $(".one h5").html(localStorage.getItem("p"+7));$(".one h5").css('font-size','14px'); 
                 break;
-                case 8: $(".one h5").html("UNFIFCATION OF CORE BANKING involving Retail");$(".one h5").css('font-size','14px'); 
+                case 8: $(".one h5").html(localStorage.getItem("p"+8));$(".one h5").css('font-size','14px'); 
                 break;
-                case 9: $(".one h5").html("Decision Intelligence using satelite big data analytics for agricultural credit lending in india");$(".one h5").css('font-size','14px'); 
+                case 9: $(".one h5").html(localStorage.getItem("p"+9));$(".one h5").css('font-size','14px'); 
                 break;
-                case 10: $(".one h5").html("TruBot,a multi-skilled Bot that can automate tedious processes and systems in banks");$(".one h5").css('font-size','14px'); 
+                case 10: $(".one h5").html(localStorage.getItem("p"+10));$(".one h5").css('font-size','14px'); 
                 break;
         }
     }

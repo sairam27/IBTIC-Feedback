@@ -1,4 +1,5 @@
 (function($){
+    var counter = 0;
     var n = localStorage.getItem("id");
     var topics=1;
     if(n==null){
@@ -14,32 +15,40 @@
     $("#resut").hide();
     $("#topic").hide();
     
-    $(document).on('click','#addtop',function(){
+    $('#addtop').each(function(index){
+    $(this).on('click',function(){
         $("#cios").hide();
         $("#fed").hide();
         $("#loginForm").hide();
         $("#resut").hide();
         $("#topic").toggle();
         $("#signup-message").hide();
+        if(counter==0){
+            $.get("topics.php",{id:localStorage.getItem("id")},function(data){
+            var json = jQuery.parseJSON(data);
+            var len = Object.keys(json).length;
+            for(var v=0; v<(len-2);v++){
+            var row='';
+            var pd = json[v].Pid;
+            pd = pd.slice(1);    
+               
+            var h = 'top'+pd;  
+                console.log(h);
+                $("#"+h).val(json[v].Topic);
+            }
+        });
+        }
+        counter++;
     });
-    $(document).on('click','#additem',function(){
-        var row='';
-        row+='<li><span class="fa fa-align-justify"></span><input  class="form-control email" id="top'+ ++topics +'" type="text" autocomplete="off" /></li>';
-        $("#sortable").append(row);
-    });
+     
+     });
     $(document).on('click','#sortable li input',function(){
     $('#sortable li input').removeClass('selected');
     $(this).addClass('selected');
     });
-    $(document).on('click','#edititem',function(){
-        var a = $("#sortable").find("li input.selected").val();
-        alert(a);
-    });
-    $(document).on('click','#deleteitem',function(){
-        var a = $("#sortable").find("li input.selected").parent().remove();
-    });
     $('#saveitem').each(function(index){
     $(this).on('click',function(){
+        counter=0;
         $("#sortable li input").each(function(){
             var x = $(this).parent().index();
             var valu = $(this).val();
@@ -50,16 +59,14 @@
         var m=[];
         m[0]=sai;
         for(var i=1;i<=$("#sortable li").length;i++){
+            var item = {};
             var z = JSON.parse(localStorage.getItem(i));
-            var pid=z[0];
-            var topic = z[1];
-            var a = JSON.stringify(z);
-            m[i]=a;
-            localStorage.setItem("m",m);
-            var n= JSON.stringify(m);
-            console.log(n);
+            item["Pid"]=z[0];
+            item["Topic"] = z[1];
+            m.push(item);
         }
-        /*$.get("savet.php",{id:sai,array:z},function(data){
+        var n= JSON.stringify(m);
+        $.get("savet.php",{array:n},function(data){
             var result = JSON.parse(data);
             if(result.success)
                 {
@@ -68,7 +75,7 @@
             else{
                 alert("Problem Saving...!");
             }
-        });*/
+        });
     });
     });
     $(document).on('click','#delete',function(){

@@ -84,6 +84,7 @@ if(valid){
             var result = JSON.parse(data);
             if(result.success){
                 localStorage.setItem("id",result.id);
+                localStorage.setItem("mail",result.mail);
                 $(".register11").removeClass('has-error').addClass('has-success').removeClass('glyphicon-remove');
             $(".register11").removeClass('glyphicon-refresh').addClass('glyphicon-ok').removeClass('glyphicon-refresh-animate');
                 location.assign("main.html");

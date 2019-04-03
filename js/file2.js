@@ -1,6 +1,16 @@
 (function ($) {
     "use strict";
     var id = localStorage.getItem("id");
+    $("#topic1").html("1. "+localStorage.getItem("p"+1));
+    $("#topic2").html("2. "+localStorage.getItem("p"+2));
+    $("#topic3").html("3. "+localStorage.getItem("p"+3));
+    $("#topic4").html("4. "+localStorage.getItem("p"+4));
+    $("#topic5").html("5. "+localStorage.getItem("p"+5));
+    $("#topic6").html("6. "+localStorage.getItem("p"+6));
+    $("#topic7").html("7. "+localStorage.getItem("p"+7));
+    $("#topic8").html("8. "+localStorage.getItem("p"+8));
+    $("#topic9").html("9. "+localStorage.getItem("p"+9));
+    $("#topic10").html("10. "+localStorage.getItem("p"+10));
     if (id == null ){
     location.assign("index.html");
     alert("Dude You think u can access pages without login hahah...!");

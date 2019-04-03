@@ -3,47 +3,54 @@ include '_inc/dbconn.php';
 include 'adminfun.php';
 $db= new DB_functions();
 $response = array("success" => FALSE);
-if(!empty($_GET['id']) && !empty($_GET['array'])){
-        $var = mysqli_real_escape_string($con,$_GET['id']);
-        $array = mysqli_real_escape_string($con,$_GET['array']);
+if(!empty($_GET['array'])){
         $data = json_decode($_GET['array']);
+        $var  = mysqli_real_escape_string($con,$data[0]);
+        $main_data=array();
+        for($c=1;$c<count($data);$c++){
+            $Pid = mysqli_real_escape_string($con,$data[$c]->Pid);
+            $Topic =  mysqli_real_escape_string($con,$data[$c]->Topic);
+            $main_data[$c-1] = array();
+            $main_data[$c-1]['Pid'] = $Pid;
+            $main_data[$c-1]['Topic'] = $Topic;
+        }
         $sql="select * from admin where name='$var'";
         $result=mysqli_query($con,$sql);
         $rws=  mysqli_fetch_array($result);
-        $result1 = "";
+        $result2 = "";
+        $rest3 = "";
+        $rest6 = "";
+        $rest7 = "";
+        $check = true;
         if($rws['name']==$var){
-            
-            for($a=1;$a<=sizeof($data);$a++){
-                
-                $d = $data[$a-1];
-                echo $d;
+            for($e=0;$e<count($data)-1;$e++){
+                $pid = $main_data[$e]['Pid'];
+                 $p = 'p'.$pid;
+                $topic = $main_data[$e]['Topic'];
+                 $sql="select Pid from topics where Pid='$p'";
+                 $result=mysqli_query($con,$sql);
+                 if(mysqli_num_rows($result)>0){
+                     $sql="update topics set Topic ='$topic' where Pid='$p'";
+                     $result2=mysqli_query($con,$sql);
+                 }else{
+                     $sql="Insert into topics(Pid,Topic) values('$p','$topic')";
+                     $rest3=mysqli_query($con,$sql);
+                 }    
+                if(isset($result2) || isset($rest3)){
+                    $check=true;
+                }else{
+                    $check=false;
+                }
             }
-            
-        /*$sql="select Pid from topics where ";
-        $result=mysqli_query($con,$sql);
-        if(mysqli_num_rows($result)>0){
-            while($rws=  mysqli_fetch_assoc($result)){
-            
+            if($check){
+                $response["success"] = TRUE;
+                $response["message"] = "Successfully submited";
+                echo json_encode($response);     
+            }else{
+                $response["success"] = FALSE;
+                $response["message"] = "Failed to save";
+                echo json_encode($response);
             }
-        }else{
-            echo "0 results";
-        }*/
-            
-            for($a=1;$a<=sizeof($data);$a++){
-                
-                /*$d = $data[$a-1];
-                $sql1="INSERT INTO topics(Pid,Topic)VALUES('p$a','$d')";
-                $result1=mysqli_query($con,$sql1);*/
-            }
-        if($result1){
-            $response["success"] = TRUE;
-            $response["message"] = "saved Successfully..!";
-            echo json_encode($response);
-        }else{
-            $response["success"] = FALSE;
-            $response["message"] = "Unknown Error occured Contact Developer.";
-            echo json_encode($response);
-        }    
         }else{
             $response["success"] = FALSE;
             $response["message"] = "admin auth failed";
@@ -54,3 +61,4 @@ if(!empty($_GET['id']) && !empty($_GET['array'])){
             $response["message"] = "parameter missing.!";
             echo json_encode($response);
 }
+?>
