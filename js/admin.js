@@ -1,15 +1,76 @@
 (function($){
     var n = localStorage.getItem("id");
+    var topics=1;
     if(n==null){
         alert("HAHAHHAHAHA");
         location.assign("adminlogin.html");
     }
+    $("#sortable").sortable();
     
     invalid_fields_on_page=  0;
     $("#loginForm").hide();
     $("#cios").hide();
     $("#fed").hide();
     $("#resut").hide();
+    $("#topic").hide();
+    
+    $(document).on('click','#addtop',function(){
+        $("#cios").hide();
+        $("#fed").hide();
+        $("#loginForm").hide();
+        $("#resut").hide();
+        $("#topic").toggle();
+        $("#signup-message").hide();
+    });
+    $(document).on('click','#additem',function(){
+        var row='';
+        row+='<li><span class="fa fa-align-justify"></span><input  class="form-control email" id="top'+ ++topics +'" type="text" autocomplete="off" /></li>';
+        $("#sortable").append(row);
+    });
+    $(document).on('click','#sortable li input',function(){
+    $('#sortable li input').removeClass('selected');
+    $(this).addClass('selected');
+    });
+    $(document).on('click','#edititem',function(){
+        var a = $("#sortable").find("li input.selected").val();
+        alert(a);
+    });
+    $(document).on('click','#deleteitem',function(){
+        var a = $("#sortable").find("li input.selected").parent().remove();
+    });
+    $('#saveitem').each(function(index){
+    $(this).on('click',function(){
+        $("#sortable li input").each(function(){
+            var x = $(this).parent().index();
+            var valu = $(this).val();
+            var b=  [x+1,valu];
+            localStorage.setItem((x+1),JSON.stringify(b));
+        });
+        var sai = localStorage.getItem("id");
+        var m=[];
+        m[0]=sai;
+        for(var i=1;i<=$("#sortable li").length;i++){
+            var z = JSON.parse(localStorage.getItem(i));
+            var pid=z[0];
+            var topic = z[1];
+            var a = JSON.stringify(z);
+            m[i]=a;
+            localStorage.setItem("m",m);
+            var n= JSON.stringify(m);
+            console.log(n);
+        }
+        /*$.get("savet.php",{id:sai,array:z},function(data){
+            var result = JSON.parse(data);
+            if(result.success)
+                {
+                    alert("Saved Successfully");
+                }
+            else{
+                alert("Problem Saving...!");
+            }
+        });*/
+    });
+    });
     $(document).on('click','#delete',function(){
         $(this).find(".register15").removeClass('has-error').addClass('has-success');
         $(this).find(".register15").addClass('glyphicon-refresh').addClass('glyphicon-refresh-animate');
@@ -47,6 +108,7 @@
         $("#fed").hide();
         $("#resut").hide();
          $("#loginForm").toggle();
+        $("#topic").hide();
     });
     $(document).on('click','#logout',function(){
         localStorage.clear();
@@ -57,6 +119,7 @@
         $("#fed").hide();
         $("#loginForm").hide();
         $("#resut").toggle();
+        $("#topic").hide();
         $("#signup-message").hide();
         var content = '';
         $(this).find(".register14").removeClass('has-error').addClass('has-success');
@@ -134,6 +197,7 @@
         $("#loginForm").hide();
         $("#resut").hide();
         $("#fed").toggle();
+        $("#topic").hide();
         var content = '';
         $(this).find(".register13").removeClass('has-error').addClass('has-success');
         $(this).find(".register13").addClass('glyphicon-refresh').addClass('glyphicon-refresh-animate');
@@ -172,6 +236,7 @@
         $("#loginForm").hide();
         $("#resut").hide();
         $("#fed").hide();
+        $("#topic").hide();
          $("#cios").toggle();
         $(this).find(".register12").removeClass('has-error').addClass('has-success');
         $(this).find(".register12").addClass('glyphicon-refresh').addClass('glyphicon-refresh-animate');

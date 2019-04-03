@@ -4,9 +4,9 @@
 }
 .br-theme-bars-1to10 .br-widget a {
   display: block;
-  width: 12px;
+  width: 25px;
   padding: 5px 0;
-  height: 28px;
+  height: 38px;
   float: left;
   background-color: #fbedd9;
   margin: 1px;
@@ -22,7 +22,7 @@
   float: left;
   padding: 0 20px 0 20px;
   color: #EDB867;
-  font-weight: 400;
+  font-weight: 600;
 }
 .br-theme-bars-1to10 .br-readonly a {
   cursor: default;

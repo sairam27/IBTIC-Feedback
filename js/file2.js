@@ -1,6 +1,7 @@
 (function ($) {
+    "use strict";
     var id = localStorage.getItem("id");
-    if(id==null ){
+    if (id == null ){
     location.assign("index.html");
     alert("Dude You think u can access pages without login hahah...!");
     }
@@ -9,39 +10,12 @@
         location.assign("main.html");
        });  
     });
-    $('#rate1').barrating('show', {
-            theme: 'bars-1to10'
-        });
-    $('#rate2').barrating('show', {
-            theme: 'bars-1to10'
-        }); 
-     $('#rate3').barrating('show', {
-            theme: 'bars-1to10'
-        });
-    $('#rate4').barrating('show', {
-            theme: 'bars-1to10'
-        });
-     $('#rate').barrating('show', {
-            theme: 'bars-1to10'
-        });
-    $('#rate5').barrating('show', {
-            theme: 'bars-1to10'
-        });
-     $('#rate6').barrating('show', {
-            theme: 'bars-1to10'
-        });
-    $('#rate7').barrating('show', {
-            theme: 'bars-1to10'
-        });
-     $('#rate8').barrating('show', {
-            theme: 'bars-1to10'
-        });
-    $('#rate9').barrating('show', {
-            theme: 'bars-1to10'
-        });
-     $('#rate10').barrating('show', {
-            theme: 'bars-1to10'
-        });
+    $('.sai').barrating('show',{
+        theme: 'bars-1to10',
+        showvalues: true,
+        showSelectedrating: false
+    });
+
     for(var a=1;a<=10;a++){ 
     var x =JSON.parse(localStorage.getItem(a));
         if(x){
