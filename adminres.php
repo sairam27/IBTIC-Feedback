@@ -90,7 +90,7 @@ if(!empty($_GET['id'])){
                 $g++;
             }
             $highmean = array();
-            $hignsum = array();
+            $highsum = array();
             for($i=0;$i<10;$i++){
             $highmean[$i]=$sai[$i]; 
             }
@@ -114,7 +114,7 @@ if(!empty($_GET['id'])){
 }
 }else{
       $response["success"] = FALSE;
-                $response["message"] = "param missing";
-                echo json_encode($response);        
+        $response["message"] = "param missing";
+        echo json_encode($response);        
         }
 ?>
